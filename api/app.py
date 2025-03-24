@@ -34,9 +34,9 @@ class User(UserMixin):
 users = {
     'admin': User('1', 'admin', 'c29FLBV593@', 'all'),
     'YMAS' : User('3',  'YMAS', 'c29FLBV593', 'all'),#Youssef Mohamed Ahmed
-    'MMM' : User('2', 'MMM', 'R9T5B2L8', [3, 2, 6, 5,8]),#Mahmoud Mohamed Mahmoud
+    'MMM' : User('2', 'MMM', 'R9T5B2L8', [3, 2, 6, 5,8,11,10]),#Mahmoud Mohamed Mahmoud
     'SWA': User('4', 'SWA', '3K7M4N1Q', [1, 4,9]),#Sandy Wassim Abdullah
-    'KHZ': User('5','KHZ', 'W6X2Y9Z4', [3, 2, 6, 5,8])#Karam Hazem Zaki
+    'KHZ': User('5','KHZ', 'W6X2Y9Z4', [3, 2, 6, 5,8,11,10,7])#Karam Hazem Zaki
 }
 
 students = [
@@ -48,15 +48,17 @@ students = [
  'facebook': 'https://www.facebook.com/profile.php?id=61550241764159',
  'dob': '2011-07-01',
  'car': ''},
-    {'id': 2, 'name': 'Karam Hazem Zaki Fouad Mushtaha', 'phone': '01009431618', 'address': 'Shobra', 'instagram': 'https://www.instagram.com/karam.hazem.10/', 'facebook': 'https://www.facebook.com/karam.hazem.10', 'dob': '2011-02-05', 'car': ''},
-    {'id': 3, 'name': 'Mahmoud Mohamed Mahmoud', 'phone': '01090968876', 'address': 'Awsim', 'instagram': 'https://www.instagram.com/mahmoud_______2011/', 'facebook': 'https://www.facebook.com/profile.php?id=100050581157620', 'dob': '2011-08-28', 'car': 'Hyundai Elantra 2020'},
-    {'id': 4, 'name': 'Layan Wael Mohamed', 'phone': '01554918118', 'address': 'Faisal Mariouteya', 'instagram': '', 'facebook': 'https://www.facebook.com/lian.wael.14', 'dob': '2011-08-01', 'car': ''},
-    {'id': 5, 'name': 'Malek Hany Abdelal', 'phone': '01122206125', 'address': 'Faisal Mariouteya', 'instagram': 'https://www.instagram.com/itz_____malek/', 'facebook': 'https://www.facebook.com/profile.php?id=100055797635744', 'dob': '2011-10-11', 'car': ''},
-    {'id': 6, 'name': 'Youssef Mohamed Ahmed Sayed Ali', 'phone': '01155201219', 'address': 'Sheikh Zayed', 'instagram': 'https://www.instagram.com/joe__is__here/', 'facebook': 'https://www.facebook.com/profile.php?id=61553419564295', 'dob': '2011-05-28', 'car': 'Mitushibi Eclipse Cross 2024'},
-    {'id': 7, 'name': 'Hazem Ahmed Hamed','phone':'01282932266' , 'address': ' Sheikh Zayed, 9th district, 1st neighbourhood, villa 48','instagram':'','facebook':'https://www.facebook.com/share/18mufQZ6ku/' ,'dob':'2011-09-11', 'car':'toyota corolla 2021'},
-    {'id': 8, 'name': 'Asser Omar Elfarouk','phone': '','address': 'Awsim','instagram': '','facebook': '','dob': '2011-11-18','car': ''},
-    {'id': 9, 'name': 'Eman Khaled Sobhy', 'phone': '01069090855', 'address': 'Al Mansouria','instagram': 'https://www.instagram.com/emy_khaled24/','facebook': 'https://www.facebook.com/profile.php?id=100033184364731','dob': '2011-03-21','car': ''},
-    {'id': 10,'name': 'Rayan Hossam Abdullah','phone': '01028291900','address': 'El Warraq','instagram': 'https://www.instagram.com/11rayanhossam/','facebook': 'https://www.facebook.com/profile.php?id=100077890854656','dob': '2011-06-05','car': ''},
+    {'id': 2, 'name': 'Karam Hazem Zaki Fouad Mushtaha', 'phone': '01009431618', 'address': 'Shobra', 'instagram': 'https://www.instagram.com/karam.hazem.10/', 'facebook': 'https://www.facebook.com/karam.hazem.10', 'dob': '2011-02-05' },
+    {'id': 3, 'name': 'Mahmoud Mohamed Mahmoud', 'phone': '01090968876', 'address': 'Awsim', 'instagram': 'https://www.instagram.com/mahmoud_______2011/', 'facebook': 'https://www.facebook.com/profile.php?id=100050581157620', 'dob': '2011-08-28'},
+    {'id': 4, 'name': 'Layan Wael Mohamed', 'phone': '01554918118', 'address': 'Faisal Mariouteya', 'instagram': '', 'facebook': 'https://www.facebook.com/lian.wael.14', 'dob': '2011-08-01'},
+    {'id': 5, 'name': 'Malek Hany Abdelal', 'phone': '01122206125', 'address': 'Faisal Mariouteya', 'instagram': 'https://www.instagram.com/itz_____malek/', 'facebook': 'https://www.facebook.com/profile.php?id=100055797635744', 'dob': '2011-10-11'},
+    {'id': 6, 'name': 'Youssef Mohamed Ahmed Sayed Ali', 'phone': '01155201219', 'address': 'Sheikh Zayed', 'instagram': 'https://www.instagram.com/joe__is__here/', 'facebook': 'https://www.facebook.com/profile.php?id=61553419564295', 'dob': '2011-05-28'},
+    {'id': 7, 'name': 'Hazem Ahmed Hamed','phone':'01282932266' , 'address': ' Sheikh Zayed, 9th district, 1st neighbourhood, villa 48','instagram':'','facebook':'https://www.facebook.com/share/18mufQZ6ku/' ,'dob':'2011-09-11'},
+    {'id': 8, 'name': 'Asser Omar Elfarouk','phone': '','address': 'Awsim','instagram': '','facebook': '','dob': '2011-11-18'},
+    {'id': 9, 'name': 'Eman Khaled Sobhy', 'phone': '01069090855', 'address': 'Al Mansouria','instagram': 'https://www.instagram.com/emy_khaled24/','facebook': 'https://www.facebook.com/profile.php?id=100033184364731','dob': '2011-03-21'},
+    {'id': 10,'name': 'Rayan Hossam Abdullah','phone': '01028291900','address': 'El Warraq','instagram': 'https://www.instagram.com/11rayanhossam/','facebook': 'https://www.facebook.com/profile.php?id=100077890854656','dob': '2011-06-05'},
+    {'id': 11,'name': 'Yassin Ahmed Saber', 'phone': '', 'address': 'Faisal', 'instagram': 'https://www.instagram.com/yassin_priv157/', 'facebook': '', 'dob': ''},
+    {'id': 12,'name': 'Zeyad Ossama', 'phone': '01114449420', 'address': 'Hadayiq Alahram', 'instagram': 'https://www.instagram.com/https__zeyad/', 'facebook': 'https://www.facebook.com/zeyad.osama.526438', 'dob': '2011-08-16'},
 ]
 
 # User activity tracking
@@ -122,6 +124,7 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
+
     if current_user.username in user_activity:
         user_activity[current_user.username]['logout_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     logout_user()
