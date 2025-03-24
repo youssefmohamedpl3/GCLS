@@ -32,10 +32,10 @@ class User(UserMixin):
 
 # Hardcoded data (replace with database in production)
 users = {
-    'admin': User('1', 'Youssef Mohamed Ahmed', 'c29FLBV593@', 'all'),
+    'Youssef Mohamed Ahmed': User('1', 'admin', 'c29FLBV593@', 'all'),
     'YMAS' : User('3',  'YMAS', 'c29FLBV593', 'all'),#Youssef Mohamed Ahmed
     'MMM' : User('2', 'MMM', 'R9T5B2L8', [2,3,5,6,7,8,10,11,12]),#Mahmoud Mohamed Mahmoud
-    'SWA': User('4', 'SWA', '3K7M4N1Q', [1,4,9]),#Sandy Wassim Abdullah
+    'SWA': User('4', 'SWA', '3K7M4N1Q', [1,4,9,13]),#Sandy Wassim Abdullah
     'KHZ': User('5','KHZ', 'W6X2Y9Z4', [2,3,5,6,7,8,10,11,12])#Karam Hazem Zaki
 }
 
@@ -46,8 +46,7 @@ students = [
  'address': 'Sheikh Zayed',
  'instagram': 'https://www.instagram.com/sandy_wasiem12/',
  'facebook': 'https://www.facebook.com/profile.php?id=61550241764159',
- 'dob': '2011-07-01',
- 'car': ''},
+ 'dob': '2011-07-01'},
     {'id': 2, 'name': 'Karam Hazem Zaki Fouad Mushtaha', 'phone': '01009431618', 'address': 'Shobra', 'instagram': 'https://www.instagram.com/karam.hazem.10/', 'facebook': 'https://www.facebook.com/karam.hazem.10', 'dob': '2011-02-05' },
     {'id': 3, 'name': 'Mahmoud Mohamed Mahmoud', 'phone': '01090968876', 'address': 'Awsim', 'instagram': 'https://www.instagram.com/mahmoud_______2011/', 'facebook': 'https://www.facebook.com/profile.php?id=100050581157620', 'dob': '2011-08-28'},
     {'id': 4, 'name': 'Layan Wael Mohamed', 'phone': '01554918118', 'address': 'Faisal Mariouteya', 'instagram': '', 'facebook': 'https://www.facebook.com/lian.wael.14', 'dob': '2011-08-01'},
@@ -59,8 +58,8 @@ students = [
     {'id': 10,'name': 'Rayan Hossam Abdullah','phone': '01028291900','address': 'El Warraq','instagram': 'https://www.instagram.com/11rayanhossam/','facebook': 'https://www.facebook.com/profile.php?id=100077890854656','dob': '2011-06-05'},
     {'id': 11,'name': 'Yassin Ahmed Saber', 'phone': '', 'address': 'Faisal', 'instagram': 'https://www.instagram.com/yassin_priv157/', 'facebook': '', 'dob': ''},
     {'id': 12,'name': 'Zeyad Ossama', 'phone': '01114449420', 'address': 'Hadayiq Alahram', 'instagram': 'https://www.instagram.com/https__zeyad/', 'facebook': 'https://www.facebook.com/zeyad.osama.526438', 'dob': '2011-08-16'},
+    {'id': 13,'name': 'Nour Ahmed Bayoumi', 'phone': '01091651913', 'address': 'Sheikh Zayed, Jannat Zayed', 'instagram': 'https://www.instagram.com/nour_bayy/', 'facebook': 'https://www.facebook.com/profile.php?id=100005839187064', 'dob': ''},
 ]
-
 # User activity tracking
 user_activity = {}
 
