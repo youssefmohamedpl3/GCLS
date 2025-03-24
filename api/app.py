@@ -34,7 +34,7 @@ class User(UserMixin):
 users = {
     'admin': User('1', 'Youssef Mohamed Ahmed', 'c29FLBV593', 'all'),
     'YMAS' : User('3',  'Youssef Mohamed Ahmed Sayed', 'c29FLBV593', 'all'),
-    'MMM' : User('2', 'Mahmoud Mohamed MahmoudMMM', 'R9T5B2L8', [3, 2, 6, 5]),
+    'MMM' : User('2', 'Mahmoud Mohamed Mahmoud', 'R9T5B2L8', [3, 2, 6, 5]),
     'SWA': User('4', 'Sandy Wassim Abdullah', '3K7M4N1Q', [1, 4]),
     'KHZ': User('5','Karam Hazem Zaki', 'W6X2Y9Z4', [3, 2, 6, 5])
 }
