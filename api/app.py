@@ -32,7 +32,7 @@ class User(UserMixin):
 
 # Hardcoded data (replace with database in production)
 users = {
-    'admin': User('1', 'admin', 'c29FLBV593', 'all'),
+    'admin': User('1', 'admin', 'c29FLBV593@', 'all'),
     'YMAS' : User('3',  'YMAS', 'c29FLBV593', 'all'),#Youssef Mohamed Ahmed
     'MMM' : User('2', 'MMM', 'R9T5B2L8', [3, 2, 6, 5,8]),#Mahmoud Mohamed Mahmoud
     'SWA': User('4', 'SWA', '3K7M4N1Q', [1, 4,9]),#Sandy Wassim Abdullah
@@ -56,6 +56,7 @@ students = [
     {'id': 7, 'name': 'Hazem Ahmed Hamed','phone':'01282932266' , 'address': ' Sheikh Zayed, 9th district, 1st neighbourhood, villa 48','instagram':'','facebook':'https://www.facebook.com/share/18mufQZ6ku/' ,'dob':'2011-09-11', 'car':'toyota corolla 2021'},
     {'id': 8, 'name': 'Asser Omar Elfarouk','phone': '','address': 'Awsim','instagram': '','facebook': '','dob': '2011-11-18','car': ''},
     {'id': 9, 'name': 'Eman Khaled Sobhy', 'phone': '01069090855', 'address': 'Al Mansouria','instagram': 'https://www.instagram.com/emy_khaled24/','facebook': 'https://www.facebook.com/profile.php?id=100033184364731','dob': '2011-03-21','car': ''},
+    {'id': 10,'name': 'Rayan Hossam Abdullah','phone': '01028291900','address': 'El Warraq','instagram': 'https://www.instagram.com/11rayanhossam/','facebook': 'https://www.facebook.com/profile.php?id=100077890854656','dob': '2011-06-05','car': ''},
 ]
 
 # User activity tracking
