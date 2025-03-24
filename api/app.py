@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.middleware.proxy_fix import ProxyFix
 import secrets
-from datetime import datetime, timedelta 
+from datetime import datetime, timedelta
 import logging
 import os
 
@@ -10,11 +10,12 @@ import os
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+# Initialize Flask app
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', 'my-static-secret-key-12345')
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
+app.secret_key = os.environ.get('SECRET_KEY', 'my-static-secret-key-12345')  # Use env var in production
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)  # 30-minute session lifetime
 app.config['SESSION_PERMANENT'] = True
-app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1)  # Reverse proxy support
 
 # Flask-Login setup
 login_manager = LoginManager()
@@ -27,30 +28,38 @@ class User(UserMixin):
         self.id = id
         self.username = username
         self.password = password
-        self.accessible_students = accessible_students
+        self.accessible_students = accessible_students  # 'all' or list of student IDs
 
-# Users
+# Hardcoded data (replace with database in production)
 users = {
     'admin': User('1', 'Youssef Mohamed Ahmed', 'c29FLBV593', 'all'),
-    'YMA': User('3', 'Youssef Mohamed Ahmed', 'c29FLBV593', 'all'),
-    'MMM': User('2', 'Mahmoud Mohamed Mahmoud', 'R9T5B2L8', [3, 2, 6, 5]),
-    'SWA': User("4", 'Sandy Wassim Abdullah', '3K7M4N1Q', [1, 4]),
-    'KHZ': User("5", 'Karam Hazem Zaki', 'W6X2Y9Z4', [3, 2, 6, 5])
+    'YMAS' : User('3',  'Youssef Mohamed Ahmed Sayed', 'c29FLBV593', 'all'),
+    'MMM' : User('2', 'Mahmoud Mohamed MahmoudMMM', 'R9T5B2L8', [3, 2, 6, 5]),
+    'SWA': User('4', 'Sandy Wassim Abdullah', '3K7M4N1Q', [1, 4]),
+    'KHZ': User('5','Karam Hazem Zaki', 'W6X2Y9Z4', [3, 2, 6, 5])
 }
 
-# Student data
 students = [
-    {'id': 2, 'name': 'Karam Hazem Zaki Mushtaha', 'phone': '01009431618', 'address': 'Shobra', 'instagram': 'https://www.instagram.com/karam.hazem.10/', 'facebook': 'https://www.facebook.com/karam.hazem.10', 'dob': '2011-02-05', 'car': ''},
+    {'id': 1,
+ 'name': 'Sandy Wassim Abdullah',
+ 'phone': '01030064939',
+ 'address': 'Sheikh Zayed',
+ 'instagram': 'https://www.instagram.com/sandy_wasiem12/',
+ 'facebook': 'https://www.facebook.com/profile.php?id=61550241764159',
+ 'dob': '2011-07-01',
+ 'car': ''},
+    {'id': 2, 'name': 'Karam Hazem Zaki Fouad Mushtaha', 'phone': '01009431618', 'address': 'Shobra', 'instagram': 'https://www.instagram.com/karam.hazem.10/', 'facebook': 'https://www.facebook.com/karam.hazem.10', 'dob': '2011-02-05', 'car': ''},
     {'id': 3, 'name': 'Mahmoud Mohamed Mahmoud', 'phone': '01090968876', 'address': 'Awsim', 'instagram': 'https://www.instagram.com/mahmoud_______2011/', 'facebook': 'https://www.facebook.com/profile.php?id=100050581157620', 'dob': '2011-08-28', 'car': 'Hyundai Elantra 2020'},
-    {'id': 5, 'name': 'Malek Hany Abdelal', 'phone': '01122206125', 'address': 'Faisal Mariouteya', 'instagram': 'https://www.instagram.com/itz_____malek/', 'facebook': 'https://www.facebook.com/profile.php?id=100055797635744', 'dob': '2011-10-11', 'car': ''},
     {'id': 4, 'name': 'Layan Wael Mohamed', 'phone': '01554918118', 'address': 'Faisal Mariouteya', 'instagram': '', 'facebook': 'https://www.facebook.com/lian.wael.14', 'dob': '2011-08-01', 'car': ''},
-    {'id': 1, 'name': 'Sandy Wassim Abdullah', 'phone': '01030064939', 'address': 'Sheikh Zayed, 8th district', 'instagram': 'https://www.instagram.com/sandy_wasiem12/', 'facebook': 'https://www.facebook.com/profile.php?id=61550241764159&mibextid=ZbWKwL', 'dob': '2011-07-01', 'car': ''},
-    {'id': 6, 'name': 'Youssef Mohamed Ahmed Sayed Ali', 'phone': '01155201219', 'address': 'Sheikh Zayed, 9th district, 1st Neighbourhoud, villa 103, appartment 7', 'instagram': 'https://www.instagram.com/joe__is__here/', 'facebook': 'https://www.facebook.com/profile.php?id=61553419564295', 'dob': '2011-05-28', 'car': 'Mitushibi Eclipse Cross 2024'}
+    {'id': 5, 'name': 'Malek Hany Abdelal', 'phone': '01122206125', 'address': 'Faisal Mariouteya', 'instagram': 'https://www.instagram.com/itz_____malek/', 'facebook': 'https://www.facebook.com/profile.php?id=100055797635744', 'dob': '2011-10-11', 'car': ''},
+    {'id': 6, 'name': 'Youssef Mohamed Ahmed Sayed Ali', 'phone': '01155201219', 'address': 'Sheikh Zayed', 'instagram': 'https://www.instagram.com/joe__is__here/', 'facebook': 'https://www.facebook.com/profile.php?id=61553419564295', 'dob': '2011-05-28', 'car': 'Mitushibi Eclipse Cross 2024'},
+    {'id': 7, 'name': 'Hazem Ahmed Hamed','phone':'01282932266' , 'address': ' Sheikh Zayed, 9th district, 1st neighbourhood, villa 48','instagram':'','facebook':'https://www.facebook.com/share/18mufQZ6ku/' ,'dob':'2011-09-11', 'car':'toyota corolla 2021'}
 ]
 
-# Store user activity globally
+# User activity tracking
 user_activity = {}
 
+# Load user for Flask-Login
 @login_manager.user_loader
 def load_user(user_id):
     for user in users.values():
@@ -66,21 +75,17 @@ def generate_token(student_id):
 
 def validate_token(student_id, token):
     token_data = session.get(f'token_{student_id}')
-    if not token_data or token_data['token'] != token or datetime.now().timestamp() > token_data['expires']:
-        return False
-    return True
+    return token_data and token_data['token'] == token and datetime.now().timestamp() <= token_data['expires']
 
-# Check session expiration
+# Session expiration check
 def check_session_expiration():
     if current_user.is_authenticated:
         last_activity = session.get('last_activity')
-        if last_activity:
-            last_activity_time = datetime.fromtimestamp(last_activity)
-            if datetime.now() - last_activity_time > app.config['PERMANENT_SESSION_LIFETIME']:
-                if current_user.username in user_activity:
-                    user_activity[current_user.username]['logout_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                session.clear()
-                logout_user()
+        if last_activity and (datetime.now() - datetime.fromtimestamp(last_activity)) > app.config['PERMANENT_SESSION_LIFETIME']:
+            if current_user.username in user_activity:
+                user_activity[current_user.username]['logout_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            logout_user()
+            session.clear()
         session['last_activity'] = datetime.now().timestamp()
         session.modified = True
 
@@ -88,32 +93,27 @@ def check_session_expiration():
 def before_request():
     check_session_expiration()
 
+# Routes
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    logger.info(f"Login request: {request.method} from {request.remote_addr}")
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        logger.info(f"Login attempt: username={username}")
-        user = next((u for u in users.values() if u.username == username), None)
-        if user and user.password == password:
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if not username or not password:
+            flash('Username and password are required')
+            return render_template('login.html')
+        user = next((u for u in users.values() if u.username == username and u.password == password), None)
+        if user:
             login_user(user)
-            session['test'] = 'test_value'
-            logger.info(f"User {user.username} (ID: {user.id}) authenticated: {current_user.is_authenticated}")
-            session['accessed_students'] = []
             session['last_activity'] = datetime.now().timestamp()
             user_activity[user.username] = {
                 'login_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                 'logout_time': None,
                 'students_checked': []
             }
-            logger.info(f"Redirecting to {url_for('index')}")
+            logger.info(f"User {user.username} logged in")
             return redirect(url_for('index'))
-        else:
-            flash('Invalid username or password')
-            logger.info(f"Login failed for {username}: Invalid credentials")
-    else:
-        logger.info("Rendering login page for GET request")
+        flash('Invalid username or password')
     return render_template('login.html')
 
 @app.route('/logout')
@@ -121,60 +121,54 @@ def login():
 def logout():
     if current_user.username in user_activity:
         user_activity[current_user.username]['logout_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    logger.info(f"User '{current_user.username}' logged out.")
-    session.clear()
     logout_user()
+    session.clear()
+    logger.info("User logged out")
     return redirect(url_for('login'))
 
 @app.route('/')
 @login_required
 def index():
     try:
-        logger.info(f"Index accessed by {current_user.username}, authenticated: {current_user.is_authenticated}, test: {session.get('test')}")
         if current_user.username == 'Youssef Mohamed Ahmed':
-            logger.info("Rendering admin dashboard")
             return render_template('admin_dashboard.html', users=users, user_activity=user_activity)
-        else:
-            logger.info(f"Processing student list for {current_user.username}")
-            if current_user.accessible_students == 'all':
-                filtered_students = students
-            else:
-                filtered_students = [s for s in students if s['id'] in current_user.accessible_students]
-            logger.info(f"Filtered students: {[s['id'] for s in filtered_students]}")
-            student_tokens = {student['id']: generate_token(student['id']) for student in filtered_students}
-            logger.info("Rendering index.html with student list")
-            return render_template('index.html', students=filtered_students, tokens=student_tokens)
+        filtered_students = students if current_user.accessible_students == 'all' else [
+            s for s in students if s['id'] in current_user.accessible_students
+        ]
+        tokens = {student['id']: generate_token(student['id']) for student in filtered_students}
+        return render_template('index.html', students=filtered_students, tokens=tokens)
     except Exception as e:
-        logger.error(f"Error in index route: {str(e)}")
+        logger.error(f"Error in index: {str(e)}")
         return "Internal Server Error", 500
 
 @app.route('/student', methods=['POST'])
 @login_required
 def student_detail():
     try:
-        student_id = int(request.form['student_id'])
-        token = request.form['token']
-        
+        student_id = request.form.get('student_id')
+        token = request.form.get('token')
+        if not student_id or not token:
+            return 'Missing student_id or token', 400
+        try:
+            student_id = int(student_id)
+        except ValueError:
+            return 'Invalid student_id', 400
         if not validate_token(student_id, token):
             return 'Invalid or expired token', 403
-        
         student = next((s for s in students if s['id'] == student_id), None)
         if not student:
             return 'Student not found', 404
-        
         if current_user.accessible_students != 'all' and student['id'] not in current_user.accessible_students:
-            return 'Unauthorized access', 403
-        
+            return 'Unauthorized', 403
         if current_user.username in user_activity:
             user_activity[current_user.username]['students_checked'].append({
                 'id': student_id,
                 'name': student['name'],
                 'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             })
-        
         return render_template('student.html', student=student)
     except Exception as e:
-        logger.error(f"Error in student_detail route: {str(e)}")
+        logger.error(f"Error in student_detail: {str(e)}")
         return "Internal Server Error", 500
 
 @app.route('/clear_activity', methods=['POST'])
@@ -183,14 +177,8 @@ def clear_activity():
     if current_user.username != 'Youssef Mohamed Ahmed':
         return 'Unauthorized', 403
     user_activity.clear()
-    logger.info("Admin cleared all user activity data.")
-    flash('All user activity data has been cleared.')
+    flash('User activity cleared')
     return redirect(url_for('index'))
-
-@app.route('/test')
-@login_required
-def test():
-    return f"Logged in as {current_user.username}, Authenticated: {current_user.is_authenticated}, Test: {session.get('test')}"
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
