@@ -34,9 +34,9 @@ class User(UserMixin):
 users = {
     'admin': User('1', 'admin', 'c29FLBV593@', 'all'),
     'YMAS' : User('3',  'YMAS', 'c29FLBV593', 'all'),#Youssef Mohamed Ahmed
-    'MMM' : User('2', 'MMM', 'R9T5B2L8', [3, 2, 6, 5,8,11,10]),#Mahmoud Mohamed Mahmoud
-    'SWA': User('4', 'SWA', '3K7M4N1Q', [1, 4,9]),#Sandy Wassim Abdullah
-    'KHZ': User('5','KHZ', 'W6X2Y9Z4', [3, 2, 6, 5,8,11,10,7])#Karam Hazem Zaki
+    'MMM' : User('2', 'MMM', 'R9T5B2L8', [2,3,5,6,7,8,10,11,12]),#Mahmoud Mohamed Mahmoud
+    'SWA': User('4', 'SWA', '3K7M4N1Q', [1,4,9]),#Sandy Wassim Abdullah
+    'KHZ': User('5','KHZ', 'W6X2Y9Z4', [2,3,5,6,7,8,10,11,12])#Karam Hazem Zaki
 }
 
 students = [
