@@ -13,8 +13,8 @@
                 <h1>{{ student.name }}</h1>
                 <p>Phone: {{ student.phone or 'N/A' }}</p>
                 <p>Address: {{ student.address or 'N/A'}}</p>
-                <p>Instagram: <a href="{{ student.instagram }}">{{ student.instagram }}</a></p>
-                <p>Facebook: <a href="{{ student.facebook }}">{{ student.facebook }}</a></p>
+                <p>Instagram: <a href="{{ student.instagram }}">{{ student.instagram or 'N/A'}}</a></p>
+                <p>Facebook: <a href="{{ student.facebook }}">{{ student.facebook or 'N/A'}}</a></p>
                 <p>Date of Birth: {{ student.dob or 'N/A'}}</p>
             </div>
         </div>
