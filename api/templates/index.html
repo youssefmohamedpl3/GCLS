@@ -14,8 +14,8 @@
             {% for student in students %}
                 <div class="student-card">
                     <form method="POST" action="/student">
+                        {{ csrf_token() }}
                         <input type="hidden" name="student_id" value="{{ student.id }}">
-                        <input type="hidden" name="token" value="{{ tokens[student.id] }}">
                         <button type="submit">{{ student.name }}</button>
                     </form>
                 </div>

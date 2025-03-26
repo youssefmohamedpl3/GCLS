@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.middleware.proxy_fix import ProxyFix
-import secrets
+from flask_wtf.csrf import CSRFProtect
 from datetime import datetime, timedelta
 import logging
 import os
@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 # Initialize Flask app
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'my-static-secret-key-12345')  # Use env var in production
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)  # 30-minute session lifetime
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 app.config['SESSION_PERMANENT'] = True
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1)  # Reverse proxy support
 
@@ -21,6 +21,9 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+# CSRF Protection
+csrf = CSRFProtect(app)
 
 # User class
 class User(UserMixin):
@@ -30,7 +33,7 @@ class User(UserMixin):
         self.password = password
         self.accessible_students = accessible_students  # 'all' or list of student IDs
 
-# Hardcoded data (exactly as in the original)
+# Hardcoded users
 users = {
     'Youssef Mohamed Ahmed': User('1', 'admin', 'c29FLBV593@', 'all'),
     'YMAS': User('3', 'YMAS', 'c29FLBV593', 'all'),
@@ -39,6 +42,7 @@ users = {
     'KHZ': User('5', 'KHZ', '12345678', [2, 3, 5, 6, 7, 8, 10, 11, 12])
 }
 
+# Hardcoded students
 students = [
     {'id': 1, 'name': 'Sandy Wassim Abdullah', 'phone': '01030064939', 'address': 'Sheikh Zayed', 'instagram': 'https://www.instagram.com/sandy_wasiem12/', 'facebook': 'https://www.facebook.com/profile.php?id=61550241764159', 'dob': '2011-07-01'},
     {'id': 2, 'name': 'Karam Hazem Zaki Fouad Mushtaha', 'phone': '01009431618', 'address': 'Shobra', 'instagram': 'https://www.instagram.com/karam.hazem.10/', 'facebook': 'https://www.facebook.com/karam.hazem.10', 'dob': '2011-02-05'},
@@ -56,7 +60,6 @@ students = [
     {'id': 14, 'name': 'Retal Amr', 'phone': '01157301291', 'address': 'Sheikh Zayed, Palm Hills', 'instagram': 'https://www.instagram.com/retalamr_09/', 'facebook': 'https://www.facebook.com/profile.php?id=61561025622171', 'dob': '2011-02-01'},
     {'id': 15, 'name': 'Kenzy Ahmed', 'phone': '01557831722', 'address': 'Hadayiq Alahram', 'instagram': 'https://www.instagram.com/kenzyahmed870/', 'facebook': 'https://www.facebook.com/kenzyAhmed22011', 'dob': '2011-02-27'},
 ]
-
 students.sort(key=lambda x: x['name'])
 
 # User activity tracking
@@ -69,16 +72,6 @@ def load_user(user_id):
         if user.id == user_id:
             return user
     return None
-
-# Token generation and validation
-def generate_token(student_id):
-    token = secrets.token_urlsafe(16)
-    session[f'token_{student_id}'] = {'token': token, 'expires': (datetime.now() + timedelta(minutes=5)).timestamp()}
-    return token
-
-def validate_token(student_id, token):
-    token_data = session.get(f'token_{student_id}')
-    return token_data and token_data['token'] == token and datetime.now().timestamp() <= token_data['expires']
 
 # Session expiration check
 def check_session_expiration():
@@ -138,8 +131,7 @@ def index():
         filtered_students = students if current_user.accessible_students == 'all' else [
             s for s in students if s['id'] in current_user.accessible_students
         ]
-        tokens = {student['id']: generate_token(student['id']) for student in filtered_students}
-        return render_template('index.html', students=filtered_students, tokens=tokens)
+        return render_template('index.html', students=filtered_students)
     except Exception as e:
         logger.error(f"Error in index: {str(e)}")
         return "Internal Server Error", 500
@@ -149,15 +141,12 @@ def index():
 def student_detail():
     try:
         student_id = request.form.get('student_id')
-        token = request.form.get('token')
-        if not student_id or not token:
-            return 'Missing student_id or token', 400
+        if not student_id:
+            return 'Missing student_id', 400
         try:
             student_id = int(student_id)
         except ValueError:
             return 'Invalid student_id', 400
-        if not validate_token(student_id, token):
-            return 'Invalid or expired token', 403
         student = next((s for s in students if s['id'] == student_id), None)
         if not student:
             return 'Student not found', 404

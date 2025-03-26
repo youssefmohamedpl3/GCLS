@@ -1,395 +1,47 @@
-/* Midnight Holographic Theme */
-@import url('https://fonts.googleapis.com/css2?family=VT323&family=Orbitron:wght@500;700&family=Press+Start+2P&display=swap');
-
-/* Custom Properties for Colors and Effects */
-:root {
-  --midnight-black: #000000; /* Pure black */
-  --holo-blue: #00c4ff; /* Icy holographic blue */
-  --holo-purple: #7b2cbf; /* Deep holographic purple */
-  --neon-silver: #d0d0d0; /* Neon silver for text */
-  --neon-cyan: #00ffea; /* Cyan for accents */
-  --fragment-shadow: 0 0 20px rgba(0, 196, 255, 0.5);
-  --glow: 0 0 10px rgba(0, 196, 255, 0.7);
-  --holo-gradient: linear-gradient(45deg, var(--holo-blue), var(--holo-purple));
-}
-
-/* Reset and Base Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Midnight Background with Holographic Particles */
+/* Basic styling */
 body {
-  background: var(--midnight-black);
-  font-family: 'VT323', monospace;
-  color: var(--neon-silver);
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
 }
 
-/* Holographic Background with Animated Particles */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 40% 60%, rgba(123, 44, 191, 0.15) 0%, var(--midnight-black) 70%);
-  z-index: -1;
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="2" height="2"><circle cx="1" cy="1" r="1" fill="%23ffffff" opacity="0.2"/></svg>') repeat;
-  animation: particleDrift 60s linear infinite;
-  z-index: -1;
+h1 {
+    color: #333;
 }
 
-@keyframes particleDrift {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(-50px, 50px); }
+.flash-message {
+    color: red;
+    font-weight: bold;
 }
 
-/* Subtle Holographic Scanline Effect */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--neon-cyan);
-  box-shadow: 0 0 10px var(--neon-cyan);
-  animation: scanline 5s linear infinite;
-}
-
-@keyframes scanline {
-  0% { top: 0; }
-  100% { top: 100%; }
-}
-
-/* Holographic Container */
-.container, .detail-container {
-  max-width: 1200px;
-  margin: 3rem auto;
-  padding: 2rem;
-  position: relative;
-  transform: translateZ(0);
-  background: rgba(0, 0, 0, 0.7);
-  border: 1px dashed var(--holo-purple);
-  border-radius: 15px;
-  box-shadow: 0 0 30px rgba(123, 44, 191, 0.3);
-  backdrop-filter: blur(5px);
-}
-
-/* Headings with Holographic Glitch Effect */
-h1, h2, h3 {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--neon-silver);
-  text-shadow: 0 0 15px var(--holo-blue), 0 0 30px var(--holo-purple);
-  position: relative;
-  font-size: 2.5rem;
-  text-transform: uppercase;
-  animation: holoGlitch 1.5s infinite;
-}
-
-h1::before, h1::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-h1::before {
-  color: var(--holo-blue);
-  animation: glitchTop 1s linear infinite;
-  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
-}
-
-h1::after {
-  color: var(--neon-cyan);
-  animation: glitchBottom 1.5s linear infinite;
-  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
-}
-
-@keyframes glitchTop {
-  2%, 64% { transform: translate(2px, -2px); }
-  4%, 60% { transform: translate(-2px, 2px); }
-  62% { transform: translate(13px, -1px) skew(13deg); }
-}
-
-@keyframes glitchBottom {
-  2%, 64% { transform: translate(-2px, 0); }
-  4%, 60% { transform: translate(-2px, 0); }
-  62% { transform: translate(-22px, 5px) skew(21deg); }
-}
-
-@keyframes holoGlitch {
-  0% { transform: translate(0); }
-  10% { transform: translate(-2px, 2px); }
-  20% { transform: translate(2px, -2px); }
-  30% { transform: translate(0); }
-  100% { transform: translate(0); }
-}
-
-/* Form Styles */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 400px;
-  margin: 2rem auto;
-}
-
-label {
-  font-size: 1.2rem;
-  color: var(--neon-silver);
-  text-shadow: 0 0 5px var(--holo-blue);
-}
-
-input[type="text"],
-input[type="password"] {
-  padding: 0.8rem;
-  font-size: 1.2rem;
-  border: 1px solid var(--holo-blue);
-  background: rgba(0, 196, 255, 0.1);
-  color: var(--neon-silver);
-  border-radius: 5px;
-  transition: all 0.3s;
-  font-family: 'VT323', monospace;
-}
-
-input[type="text"]:focus,
-input[type="password"]:focus {
-  outline: none;
-  box-shadow: var(--glow);
-  border-color: var(--neon-cyan);
-}
-
-button {
-  padding: 0.8rem;
-  font-size: 1.2rem;
-  background: var(--holo-gradient);
-  border: none;
-  color: var(--midnight-black);
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: 'Press Start 2P', cursive;
-  transition: all 0.3s;
-}
-
-button:hover {
-  box-shadow: 0 0 20px var(--holo-blue);
-  transform: scale(1.05);
-}
-
-/* Shattered Student List */
 .student-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-  padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .student-card {
-  background: rgba(0, 0, 0, 0.9);
-  padding: 1.5rem;
-  width: 250px;
-  border: 1px solid var(--holo-purple);
-  border-radius: 5px;
-  position: relative;
-  transform: rotate(var(--random-angle, 2deg));
-  animation: floatFragment 4s ease-in-out infinite;
-  transition: all 0.3s ease;
-  overflow: hidden;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-.student-card:nth-child(odd) { --random-angle: -3deg; }
-.student-card:nth-child(even) { --random-angle: 3deg; }
-
-@keyframes floatFragment {
-  0%, 100% { transform: translateY(0) rotate(var(--random-angle)); }
-  50% { transform: translateY(-10px) rotate(calc(var(--random-angle) + 1deg)); }
-}
-
-.student-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--holo-gradient);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.student-card:hover {
-  transform: scale(1.1) rotate(0deg);
-  box-shadow: var(--fragment-shadow);
-}
-
-.student-card:hover::before {
-  opacity: 0.4;
-  animation: holoShift 0.5s infinite;
-}
-
-@keyframes holoShift {
-  0% { transform: translate(0, 0); }
-  20% { transform: translate(-5px, 2px); }
-  40% { transform: translate(5px, -2px); }
-  60% { transform: translate(-3px, 1px); }
-  80% { transform: translate(3px, -1px); }
-  100% { transform: translate(0, 0); }
-}
-
-.student-card button {
-  font-size: 1.5rem;
-  color: var(--neon-silver);
-  text-shadow: 0 0 10px var(--holo-blue);
-  background: none;
-  border: none;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.student-card:hover button {
-  color: var(--neon-cyan);
-  text-shadow: 0 0 15px var(--neon-cyan);
-}
-
-/* Profile Card */
-.profile-card {
-  background: rgba(0, 0, 0, 0.95);
-  padding: 2.5rem;
-  border: 2px dashed var(--holo-purple);
-  border-radius: 10px;
-  position: relative;
-  animation: pulseBorder 2s infinite;
-}
-
-@keyframes pulseBorder {
-  0%, 100% { border-color: var(--holo-purple); }
-  50% { border-color: var(--holo-blue); }
-}
-
-.profile-card .info h1 {
-  font-size: 2rem;
-  color: var(--neon-silver);
-  text-shadow: 0 0 15px var(--holo-blue);
-}
-
-.profile-card p {
-  font-size: 1.2rem;
-  margin: 1rem 0;
-  color: var(--neon-silver);
-}
-
-.profile-card p a {
-  color: var(--neon-cyan);
-  text-decoration: none;
-}
-
-.profile-card p a:hover {
-  text-decoration: underline;
-  color: var(--holo-purple);
-}
-
-/* Floating Back Button */
 .floating-back-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 0.8rem 1.5rem;
-  background: var(--midnight-black);
-  border: 1px solid var(--holo-blue);
-  color: var(--holo-blue);
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-family: 'Press Start 2P', cursive;
-  text-decoration: none;
-}
-
-.floating-back-btn:hover {
-  background: var(--holo-blue);
-  color: var(--midnight-black);
-  box-shadow: 0 0 15px var(--holo-blue);
-}
-
-/* Flash Messages */
-.flash-message {
-  background: rgba(0, 196, 255, 0.2);
-  color: var(--holo-blue);
-  padding: 1rem;
-  border: 1px solid var(--holo-blue);
-  border-radius: 5px;
-  margin-bottom: 1rem;
-  text-align: center;
-  font-family: 'VT323', monospace;
-  font-size: 1.2rem;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .container, .detail-container {
-    margin: 1rem;
-    padding: 1rem;
-  }
-
-  .student-list {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .student-card {
-    width: 100%;
-    max-width: 300px;
-  }
-
-  h1, h2, h3 {
-    font-size: 2rem;
-  }
-
-  .floating-back-btn {
-    bottom: 15px;
-    right: 15px;
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
-  }
-
-  input[type="text"],
-  input[type="password"],
-  button {
-    font-size: 1rem;
-    padding: 0.6rem;
-  }
-}
-
-@media (max-width: 480px) {
-  h1, h2, h3 {
-    font-size: 1.5rem;
-  }
-
-  .student-card button {
-    font-size: 1.2rem;
-  }
-
-  .profile-card p {
-    font-size: 1rem;
-  }
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
 }

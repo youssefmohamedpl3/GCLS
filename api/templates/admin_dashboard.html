@@ -25,6 +25,7 @@
             {% endfor %}
         </div>
         <form method="POST" action="/clear_activity">
+            {{ csrf_token() }}
             <button type="submit">Clear Activity</button>
         </form>
         <a href="/logout" class="floating-back-btn">Logout</a>
