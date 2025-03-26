@@ -11,7 +11,7 @@
     <div class="detail-container">
         <div class="profile-card">
             <div class="info">
-                <h1>{{ student.name }}</h1>
+                <h1 data-text="{{ student.name }}">{{ student.name }}</h1>
                 <p>Phone: {{ student.phone or 'N/A' }}</p>
                 <p>Address: {{ student.address or 'N/A' }}</p>
                 <p>Instagram: <a href="{{ student.instagram }}">{{ student.instagram or 'N/A' }}</a></p>

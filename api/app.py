@@ -30,7 +30,7 @@ class User(UserMixin):
         self.password = password
         self.accessible_students = accessible_students  # 'all' or list of student IDs
 
-# Hardcoded data (replace with database in production)
+# Hardcoded data (exactly as in the original)
 users = {
     'Youssef Mohamed Ahmed': User('1', 'admin', 'c29FLBV593@', 'all'),
     'YMAS': User('3', 'YMAS', 'c29FLBV593', 'all'),
