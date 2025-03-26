@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ student.name }} - Cyber Profile</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/png">
 </head>
 <body>
     <div class="detail-container">
@@ -12,10 +13,10 @@
             <div class="info">
                 <h1>{{ student.name }}</h1>
                 <p>Phone: {{ student.phone or 'N/A' }}</p>
-                <p>Address: {{ student.address or 'N/A'}}</p>
-                <p>Instagram: <a href="{{ student.instagram }}">{{ student.instagram or 'N/A'}}</a></p>
-                <p>Facebook: <a href="{{ student.facebook }}">{{ student.facebook or 'N/A'}}</a></p>
-                <p>Date of Birth: {{ student.dob or 'N/A'}}</p>
+                <p>Address: {{ student.address or 'N/A' }}</p>
+                <p>Instagram: <a href="{{ student.instagram }}">{{ student.instagram or 'N/A' }}</a></p>
+                <p>Facebook: <a href="{{ student.facebook }}">{{ student.facebook or 'N/A' }}</a></p>
+                <p>Date of Birth: {{ student.dob or 'N/A' }}</p>
             </div>
         </div>
         <a href="/" class="floating-back-btn">Back to List</a>
