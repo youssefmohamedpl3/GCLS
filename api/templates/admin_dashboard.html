@@ -9,6 +9,14 @@
 </head>
 <body>
     <div class="container">
+        <form method="POST" action="/login">
+            {{ csrf_token() }}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
         <h1 data-text="Admin Dashboard">Admin Dashboard</h1>
         <h2 data-text="User Activity">User Activity</h2>
         <div class="student-list">
