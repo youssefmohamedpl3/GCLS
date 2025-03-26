@@ -82,6 +82,7 @@ def check_session_expiration():
                 user_activity[current_user.username]['logout_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             logout_user()
             session.clear()
+            logger.info("Session expired for user")
         session['last_activity'] = datetime.now().timestamp()
         session.modified = True
 
@@ -89,38 +90,52 @@ def check_session_expiration():
 def before_request():
     check_session_expiration()
 
+# Custom error handler for 500 errors
+@app.errorhandler(500)
+def internal_server_error(e):
+    logger.error(f"Internal Server Error: {str(e)}")
+    return "Something went wrong on our end. Please try again later.", 500
+
 # Routes
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        if not username or not password:
-            flash('Username and password are required')
-            return render_template('login.html')
-        user = next((u for u in users.values() if u.username == username and u.password == password), None)
-        if user:
-            login_user(user)
-            session['last_activity'] = datetime.now().timestamp()
-            user_activity[user.username] = {
-                'login_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                'logout_time': None,
-                'students_checked': []
-            }
-            logger.info(f"User {user.username} logged in")
-            return redirect(url_for('index'))
-        flash('Invalid username or password')
-    return render_template('login.html')
+    try:
+        if request.method == 'POST':
+            username = request.form.get('username')
+            password = request.form.get('password')
+            if not username or not password:
+                flash('Username and password are required')
+                return render_template('login.html')
+            user = next((u for u in users.values() if u.username == username and u.password == password), None)
+            if user:
+                login_user(user)
+                session['last_activity'] = datetime.now().timestamp()
+                user_activity[user.username] = {
+                    'login_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    'logout_time': None,
+                    'students_checked': []
+                }
+                logger.info(f"User {user.username} logged in")
+                return redirect(url_for('index'))
+            flash('Invalid username or password')
+        return render_template('login.html')
+    except Exception as e:
+        logger.error(f"Error in login: {str(e)}")
+        return "Internal Server Error", 500
 
 @app.route('/logout')
 @login_required
 def logout():
-    if current_user.username in user_activity:
-        user_activity[current_user.username]['logout_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    logout_user()
-    session.clear()
-    logger.info("User logged out")
-    return redirect(url_for('login'))
+    try:
+        if current_user.username in user_activity:
+            user_activity[current_user.username]['logout_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        logout_user()
+        session.clear()
+        logger.info("User logged out")
+        return redirect(url_for('login'))
+    except Exception as e:
+        logger.error(f"Error in logout: {str(e)}")
+        return "Internal Server Error", 500
 
 @app.route('/')
 @login_required
@@ -142,15 +157,19 @@ def student_detail():
     try:
         student_id = request.form.get('student_id')
         if not student_id:
+            logger.warning("Missing student_id in request")
             return 'Missing student_id', 400
         try:
             student_id = int(student_id)
         except ValueError:
+            logger.warning(f"Invalid student_id: {student_id}")
             return 'Invalid student_id', 400
         student = next((s for s in students if s['id'] == student_id), None)
         if not student:
+            logger.warning(f"Student not found: {student_id}")
             return 'Student not found', 404
         if current_user.accessible_students != 'all' and student['id'] not in current_user.accessible_students:
+            logger.warning(f"Unauthorized access attempt by {current_user.username} for student {student_id}")
             return 'Unauthorized', 403
         if current_user.username in user_activity:
             user_activity[current_user.username]['students_checked'].append({
@@ -166,12 +185,17 @@ def student_detail():
 @app.route('/clear_activity', methods=['POST'])
 @login_required
 def clear_activity():
-    if current_user.username != 'admin':
-        return 'Unauthorized', 403
-    user_activity.clear()
-    flash('User activity cleared')
-    return redirect(url_for('index'))
+    try:
+        if current_user.username != 'admin':
+            logger.warning(f"Unauthorized clear_activity attempt by {current_user.username}")
+            return 'Unauthorized', 403
+        user_activity.clear()
+        flash('User activity cleared')
+        return redirect(url_for('index'))
+    except Exception as e:
+        logger.error(f"Error in clear_activity: {str(e)}")
+        return "Internal Server Error", 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True)
