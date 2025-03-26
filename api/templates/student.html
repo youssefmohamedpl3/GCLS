@@ -9,14 +9,6 @@
 </head>
 <body>
     <div class="detail-container">
-        <form method="POST" action="/login">
-            {{ csrf_token() }}
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Login</button>
-        </form>
         <div class="profile-card">
             <div class="info">
                 <h1 data-text="{{ student.name }}">{{ student.name }}</h1>
